@@ -6,7 +6,7 @@ import styles from '../styles/styles'
 export default function Task(props) {
   console.log(props.text)
   return (
-    <TouchableOpacity style={styles.item} onPress={props.action}>
+    <TouchableOpacity style={styles.item} onLongPress={props.action}>
         <View style={styles.radio}></View>
         <Text style={styles.text}>{props.text}</Text>
        

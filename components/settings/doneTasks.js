@@ -1,11 +1,11 @@
 import React,{useState,useEffect} from 'react'
 import {View,Text,ScrollView} from 'react-native'
-import Task from './task'
+import Task from '../task'
 import * as SQLite from "expo-sqlite";
-import styles from '../styles/styles'
+import styles from '../../styles/styles'
 
 const db = SQLite.openDatabase("db.db");
-export default Done = ({navigation}) =>{
+export default DoneTasks = ({navigation}) =>{
     const [DoneTasks,setDoneTasks]=useState([]);
 
     useEffect(()=>{
@@ -50,7 +50,6 @@ export default Done = ({navigation}) =>{
     return (
       
         <View style={styles.container}>
-            <Text style={styles.title}>Done</Text>
             <ScrollView style={styles.scroll}>
             {DoneTasks.map((task,index)=>{
 

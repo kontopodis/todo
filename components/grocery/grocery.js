@@ -1,17 +1,16 @@
 import { StatusBar } from 'expo-status-bar';
-import React ,{useState,useEffect, useRef} from 'react';
-import { KeyboardAvoidingView, StyleSheet, Text, TextInput, View,TouchableOpacity,ScrollView, Keyboard} from 'react-native';
-import Task from './task'
+import React ,{useState,useEffect} from 'react';
+import { Text, View,TouchableOpacity,ScrollView} from 'react-native';
+import Task from '../task'
 import * as SQLite from "expo-sqlite";
-import styles from '../styles/styles'
+import styles from '../../styles/styles'
 const db = SQLite.openDatabase("db.db");
 
-export default Todo = () =>{
+export default Grocery = ({navigation}) =>{
 
-  const [newTask,addnewTask] = useState('');
   const [Tasks,setTasks]=useState([]);
   const [Keys,setKeys]=useState([]);
-  const textInput = useRef()
+  
   const [firstLoad, setFirstLoad] = useState(false);
 
 
@@ -21,7 +20,7 @@ useEffect(()=>{
    db.transaction((tx) => {
     //statement
     console.log("creating the table")
-     tx.executeSql(  "create table if not exists tasks (id integer primary key not null, done int, value text);"   ),
+     tx.executeSql(  "create table if not exists grocery (id integer primary key not null, done int, value text,count int);"   ),
      [] },
      //db results
      (tx,err)=>{
@@ -33,12 +32,23 @@ useEffect(()=>{
         getTasks()
       });
   }
+
   },[firstLoad])
+
+  useEffect(()=>{
+    const unsubscribe = navigation.addListener('focus', () => {
+      // Screen was focused
+      // Do something
+      getTasks()
+    });
+  
+    return unsubscribe;
+  }),[navigation]
 
 const getTasks=()=>{
   db.transaction(tx => {
     // sending 4 arguments in executeSql
-    tx.executeSql('SELECT * FROM tasks where done=?', [0], // passing sql query and parameters:null
+    tx.executeSql('SELECT * FROM grocery where done=?', [0], // passing sql query and parameters:null
       // success callback which sends two things Transaction object and ResultSet Object
       (txObj, { rows: { _array } }) => setTasks(_array) ,
       // failure callback which sends two things Transaction object and Error
@@ -48,26 +58,13 @@ const getTasks=()=>{
 }
    
 
-  const handleAddTask = async ()=>{ 
-    
-   db.transaction(
-    (tx) => {
-      tx.executeSql("insert into tasks (done, value) values (0, ?)", [newTask])},
-      (txObj, error) => console.log('Error ', error)
 
-    
-  );
-  getTasks()
-  addnewTask('');
-  Keyboard.dismiss();
-  textInput.current.setNativeProps({text:""})
-  }
 
   const updateTask = (id) => {
 console.log("updating task: ",id)
 
     db.transaction(tx => {
-      tx.executeSql('update tasks set done = 1 where id = ?', [id],
+      tx.executeSql('update grocery set done = 1 where id = ?', [id],
         (txObj, resultSet) => {
           if (resultSet.rowsAffected > 0) {
          getTasks()
@@ -81,10 +78,7 @@ console.log("updating task: ",id)
     //Container
     <View style={styles.container}>
     {
-      //Head
-    }
-      <Text style={styles.title}>Tasks</Text>
-    {
+
       //Printing Tasks
     }
          <ScrollView style={styles.scroll}>
@@ -92,19 +86,9 @@ console.log("updating task: ",id)
                return <Task text={task.value} key={task.id} action={()=>{return updateTask(task.id)}}/>
                 })}
           </ScrollView>
-    {
-      //Keyboard
-    }
-    <KeyboardAvoidingView     behavior={Platform.OS === 'ios' ? "padding" : "height"}  style={styles.WritingRow}>
-
-        <TextInput style={styles.textInput} placeholder='Add New Task' onChangeText={(text)=>addnewTask(text)} ref={textInput} />
-
-   <TouchableOpacity onPress={()=>handleAddTask()} style={styles.addWrapper}>
-     <View ><Text style={styles.addText}>+</Text></View>
-   </TouchableOpacity>
-
-      </KeyboardAvoidingView>
-
+          <TouchableOpacity onPress={()=>{navigation.navigate("AddGrocery")}} style={styles.addButton}>
+ <View ><Text style={styles.addText}>+</Text></View>
+</TouchableOpacity>
       <StatusBar style="auto" />
     </View>
 

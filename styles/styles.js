@@ -30,8 +30,6 @@ const styles = StyleSheet.create({
       top:0
     },
     WritingRow:{
-      position:"absolute",
-      bottom:10,
       flexDirection:"row",
       alignItems:"center",
       justifyContent:'space-between',
@@ -67,8 +65,8 @@ const styles = StyleSheet.create({
     scroll:{
       position:'absolute',
       width:"80%",
-      height:"80%",
-      top:100
+      height:"100%",
+
     },
     tab:{
       fontWeight:"bold",
@@ -126,6 +124,20 @@ SettingRow:{
 },
 topgap:{
 height:35
+},
+addButton:{
+  position:"absolute",
+  bottom:10,
+  right:10,
+padding:25,
+borderWidth:1,
+borderRadius:50 
+},
+settingButton:{
+  fontWeight:"bold",
+  padding:10,
+  borderWidth:1,
+  borderRadius:20
 }
   });
   

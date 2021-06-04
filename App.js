@@ -2,13 +2,10 @@
 import React  from 'react';
 import { View } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native';
-import Todo from './components/todo'
-import  Grocery  from './components/grocery'
-import Settings from './components/settings'
-import Done from './components/done'
-import House from './components/house'
+import TodoHome from './components/todo/todoHome'
+import  GroceryHome  from './components/grocery/groceryHome'
+import SettingsHome from './components/settings/settingsHome'
 import { AntDesign } from '@expo/vector-icons'; 
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import styles from './styles/styles'
 
@@ -19,28 +16,22 @@ export default function App() {
       <NavigationContainer>
         <View style={styles.topgap}></View>
 <Tab.Navigator tabBarOptions={{ showIcon: true }}>
-  <Tab.Screen name="Todo" component={Todo} 
+  <Tab.Screen name="Todo" component={TodoHome} 
               options = {{
                 tabBarIcon: ()=>{ return (<AntDesign name="check" size={24} color="black" />)},
                 tabBarLabel:""
               }}                
   />
 
-  <Tab.Screen name="Grocery" component={Grocery} 
+  <Tab.Screen name="Grocery" component={GroceryHome} 
                 options = {{
                   tabBarIcon: ()=>{ return (<AntDesign name="shoppingcart" size={24} color="black" />)},
                   tabBarLabel:""
                 }} 
   />
-  <Tab.Screen name="House" component={House} 
+  <Tab.Screen name="Settings" component={SettingsHome}  
                 options = {{
-                  tabBarIcon: ()=>{ return (<MaterialCommunityIcons name="thought-bubble" size={24} color="black" />)},
-                  tabBarLabel:""
-                }} 
-  />
-  <Tab.Screen name="Done" component={Done}  
-                options = {{
-                  tabBarIcon: ()=>{ return (<AntDesign name="filter" size={24} color="black" />)},
+                  tabBarIcon: ()=>{ return (<AntDesign name="setting" size={24} color="black" />)},
                   tabBarLabel:""
                 }} 
   />
