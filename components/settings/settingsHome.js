@@ -23,7 +23,7 @@ export default function GroceryHome({navigation}){
         />
 
         <Stack.Screen
-          name="Terms"
+          name="Licence"
           component={Terms}
         />
       </Stack.Navigator>

@@ -12,7 +12,7 @@ import styles from './styles/styles'
 const Stack = createStackNavigator();
 
 export default function App({navigation}) {
-const [ModalEnabled,setModalEnabled] = useState(true);
+const [ModalEnabled,setModalEnabled] = useState(false);
 useEffect(()=>{
   Check();
 })

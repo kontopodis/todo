@@ -10,7 +10,6 @@ export default function TodoHome({navigation}){
     <Stack.Navigator>
         <Stack.Screen name="Tasks" component={Todo}/>
         <Stack.Screen name="AddTasks" component={AddTodo}/>
-        <Stack.Screen name="Terms" component={Terms}/>
     </Stack.Navigator>
 
 
