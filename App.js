@@ -1,45 +1,77 @@
 
-import React  from 'react';
-import { View } from 'react-native'
+import React, { useEffect,useState }  from 'react';
+import { View,Modal,Text,TouchableOpacity, Touchable } from 'react-native'
+import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
-import TodoHome from './components/todo/todoHome'
-import  GroceryHome  from './components/grocery/groceryHome'
-import SettingsHome from './components/settings/settingsHome'
-import { AntDesign } from '@expo/vector-icons'; 
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import Terms from './components/licence/terms'
+import MainNavigator from './mainNavigator'
+
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import styles from './styles/styles'
 
-const Tab = createMaterialTopTabNavigator();
+const Stack = createStackNavigator();
 
-export default function App() {
-  return (
-      <NavigationContainer>
-        <View style={styles.topgap}></View>
-<Tab.Navigator tabBarOptions={{ showIcon: true }}>
-  <Tab.Screen name="Todo" component={TodoHome} 
-              options = {{
-                tabBarIcon: ()=>{ return (<AntDesign name="check" size={24} color="black" />)},
-                tabBarLabel:""
-              }}                
-  />
+export default function App({navigation}) {
+const [ModalEnabled,setModalEnabled] = useState(true);
+useEffect(()=>{
+  Check();
+})
+const getTerms = async ()=>{
+  try {
+  return await AsyncStorage.getItem('TermsAccepted')
+  } catch (e) {
+    console.log(e)
+  }
 
-  <Tab.Screen name="Grocery" component={GroceryHome} 
-                options = {{
-                  tabBarIcon: ()=>{ return (<AntDesign name="shoppingcart" size={24} color="black" />)},
-                  tabBarLabel:""
-                }} 
-  />
-  <Tab.Screen name="Settings" component={SettingsHome}  
-                options = {{
-                  tabBarIcon: ()=>{ return (<AntDesign name="setting" size={24} color="black" />)},
-                  tabBarLabel:""
-                }} 
-  />
+  
+}   
 
- 
-</Tab.Navigator>
-</NavigationContainer> 
-
+const Check=()=>{
+  getTerms().then((term)=>{
+    if (term==="true"){
+      console.log("Terms have been accepted")
+      setModalEnabled(false)
+    }else{
+      console.log("Accept the terms please")
+      setModalEnabled(true)
+    }
     
-  );
+  })
 }
+
+const AcceptTerms = async () => {
+  console.log("Accepted")
+  try {
+    await AsyncStorage.setItem('TermsAccepted', "true")
+    } catch (e) {
+    console.log(e)
+  }
+  setModalEnabled(false);
+
+  
+  
+}
+
+const TermsModal=()=>{
+  if (ModalEnabled === true){
+    return (
+    <Modal>
+      <Terms/>
+      <TouchableOpacity onPress={AcceptTerms} >
+        <Text style={styles.termsButton}> Accept</Text>
+        <Text style={styles.termsButton}>Terms & Conditions</Text>
+      </TouchableOpacity>
+    </Modal>
+    ) 
+  }
+  else {return  <View style={styles.topgap}/>}
+}
+   return(
+    <NavigationContainer>    
+      <TermsModal />
+<MainNavigator/>
+      
+  </NavigationContainer> 
+)
+}
+

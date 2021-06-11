@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React ,{useState,useEffect} from 'react';
 import { Text, View,TouchableOpacity,ScrollView} from 'react-native';
 import Task from '../task'
+
 import * as SQLite from "expo-sqlite";
 import styles from '../../styles/styles'
 const db = SQLite.openDatabase("db.db");
@@ -9,7 +10,6 @@ const db = SQLite.openDatabase("db.db");
 export default Todo = ({navigation}) =>{
 
   const [Tasks,setTasks]=useState([]);
-  const [Keys,setKeys]=useState([]);
   
   const [firstLoad, setFirstLoad] = useState(false);
 
@@ -31,6 +31,7 @@ useEffect(()=>{
         console.log("Table created")
         getTasks()
       });
+
   }
 
   },[firstLoad])
@@ -40,10 +41,14 @@ useEffect(()=>{
       // Screen was focused
       // Do something
       getTasks()
+     
     });
   
     return unsubscribe;
   }),[navigation]
+
+
+
 
 const getTasks=()=>{
   db.transaction(tx => {
@@ -77,6 +82,7 @@ console.log("updating task: ",id)
   return (
     //Container
     <View style={styles.container}>
+
     {
 
       //Printing Tasks

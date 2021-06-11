@@ -8,7 +8,7 @@ const db = SQLite.openDatabase("db.db");
 
 export default Grocery = ({navigation}) =>{
 
-  const [Tasks,setTasks]=useState([]);
+  const [Groceries,setGroceries]=useState([]);
   const [Keys,setKeys]=useState([]);
   
   const [firstLoad, setFirstLoad] = useState(false);
@@ -29,7 +29,7 @@ useEffect(()=>{
       console.log(err)
       },(tx,rs)=>{
         console.log("Table created")
-        getTasks()
+        getGroceries()
       });
   }
 
@@ -39,18 +39,18 @@ useEffect(()=>{
     const unsubscribe = navigation.addListener('focus', () => {
       // Screen was focused
       // Do something
-      getTasks()
+      getGroceries()
     });
   
     return unsubscribe;
   }),[navigation]
 
-const getTasks=()=>{
+const getGroceries=()=>{
   db.transaction(tx => {
     // sending 4 arguments in executeSql
     tx.executeSql('SELECT * FROM grocery where done=?', [0], // passing sql query and parameters:null
       // success callback which sends two things Transaction object and ResultSet Object
-      (txObj, { rows: { _array } }) => setTasks(_array) ,
+      (txObj, { rows: { _array } }) => setGroceries(_array) ,
       // failure callback which sends two things Transaction object and Error
       (txObj, error) => console.log('Error ', error)
       ) // end executeSQL
@@ -60,18 +60,18 @@ const getTasks=()=>{
 
 
 
-  const updateTask = (id) => {
-console.log("updating task: ",id)
+  const updateGroceries = (id) => {
+console.log("updating grocery: ",id)
 
     db.transaction(tx => {
       tx.executeSql('update grocery set done = 1 where id = ?', [id],
         (txObj, resultSet) => {
           if (resultSet.rowsAffected > 0) {
-         getTasks()
+    
           }
         })
     })
-    getTasks()
+    getGroceries()
   }
 
   return (
@@ -82,8 +82,8 @@ console.log("updating task: ",id)
       //Printing Tasks
     }
          <ScrollView style={styles.scroll}>
-              {Tasks.map((task,index)=>{
-               return <Task text={task.value} key={task.id} action={()=>{return updateTask(task.id)}}/>
+              {Groceries.map((task,index)=>{
+               return <Task text={task.value} key={task.id} action={()=>{return updateGroceries(task.id)}}/>
                 })}
           </ScrollView>
           <TouchableOpacity onPress={()=>{navigation.navigate("AddGrocery")}} style={styles.addButton}>

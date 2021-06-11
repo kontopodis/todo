@@ -2,6 +2,8 @@ import * as React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import Settings from './settings'
 import DoneTasks from './doneTasks'
+import OldGrocery from './oldGrocery'
+import Terms from '../licence/terms'
 const Stack = createStackNavigator();
 export default function GroceryHome({navigation}){
 
@@ -14,6 +16,15 @@ export default function GroceryHome({navigation}){
         <Stack.Screen
           name="DoneTasks"
           component={DoneTasks}
+        />
+               <Stack.Screen
+          name="OldGrocery"
+          component={OldGrocery}
+        />
+
+        <Stack.Screen
+          name="Terms"
+          component={Terms}
         />
       </Stack.Navigator>
 

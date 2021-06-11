@@ -30,6 +30,8 @@ const styles = StyleSheet.create({
       top:0
     },
     WritingRow:{
+      position:"absolute",
+      bottom:0,
       flexDirection:"row",
       alignItems:"center",
       justifyContent:'space-between',
@@ -64,7 +66,7 @@ const styles = StyleSheet.create({
     //
     scroll:{
       position:'absolute',
-      width:"80%",
+      width:"95%",
       height:"100%",
 
     },
@@ -83,13 +85,13 @@ const styles = StyleSheet.create({
     },
     
     item:{
-      borderWidth:1,
+      borderBottomWidth:1,
       padding:10,
-      borderRadius:20,
       flexDirection:'row',
       justifyContent:'space-between',
-      alignItems:'center',
-    width:'80%',
+      alignItems:'center',      
+borderColor:"lightgrey",
+    width:'95%',
     marginBottom:20
   },
 radio:{
@@ -126,18 +128,37 @@ topgap:{
 height:35
 },
 addButton:{
+  width:144,
   position:"absolute",
   bottom:10,
-  right:10,
-padding:25,
+padding:21,
 borderWidth:1,
-borderRadius:50 
+borderColor:"lightgrey",
+borderRadius:50,
+backgroundColor:"lightgrey" 
 },
 settingButton:{
-  fontWeight:"bold",
   padding:10,
-  borderWidth:1,
-  borderRadius:20
+  borderBottomWidth:1,
+  borderBottomColor:"grey",
+  width:"100%",
+  justifyContent:"center",
+  backgroundColor:"lightgrey"
+},
+settingText:{
+  fontWeight:"bold"
+},
+ButtonContainer:{
+  width:"98%",
+  flex:1
+
+},
+termsButton:{
+  textAlign:"center",
+  padding:5,
+  backgroundColor:"lightgrey",
+  width:"100%"
+
 }
   });
   

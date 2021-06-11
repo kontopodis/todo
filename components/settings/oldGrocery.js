@@ -5,54 +5,55 @@ import * as SQLite from "expo-sqlite";
 import styles from '../../styles/styles'
 
 const db = SQLite.openDatabase("db.db");
-export default DoneTasks = ({navigation}) =>{
-    const [DoneTasks,setDoneTasks]=useState([]);
+export default OldGrocery = ({navigation}) =>{
+    const [DoneGrocery,setDoneGrocery]=useState([]);
 
     useEffect(()=>{
 
       const unsubscribe = navigation.addListener('focus', () => {
         // Screen was focused
         // Do something
-        getDoneTasks()
+        getDoneGrocery()
       });
   
       return unsubscribe;
     },[navigation])
 
+
  
 
-    const getDoneTasks=()=>{
+    const getDoneGrocery=()=>{
         db.transaction(tx => {
           // sending 4 arguments in executeSql
-          tx.executeSql('SELECT * FROM tasks where done=?', [1], // passing sql query and parameters:null
+          tx.executeSql('SELECT * FROM grocery where done=?', [1], // passing sql query and parameters:null
             // success callback which sends two things Transaction object and ResultSet Object
-            (txObj, { rows: { _array } }) => setDoneTasks(_array) ,
+            (txObj, { rows: { _array } }) => setDoneGrocery(_array) ,
             // failure callback which sends two things Transaction object and Error
             (txObj, error) => console.log('Error ', error)
             ) // end executeSQL
         }) // end transaction
       }
 
-      const removeTask = (id) => {
-        console.log("removing task: ",id)
+      const removeGrocery = (id) => {
+        console.log("removing grocery: ",id)
         
             db.transaction(tx => {
-              tx.executeSql('delete from tasks where id = ?', [id],
+              tx.executeSql('delete from grocery where id = ?', [id],
                 (txObj, resultSet) => {
                   if (resultSet.rowsAffected > 0) {
                 
                   }
                 })
             })
-            getDoneTasks()
+            getDoneGrocery()
           }
     return (
       
         <View style={styles.container}>
             <ScrollView style={styles.scroll}>
-            {DoneTasks.map((task,index)=>{
+            {DoneGrocery.map((task,index)=>{
 
-  return <Task text={task.value} key={task.id} action={()=>{return removeTask(task.id)}}/>
+  return <Task text={task.value} key={task.id} action={()=>{return removeGrocery(task.id)}}/>
 })}
  </ScrollView>
                     </View>
