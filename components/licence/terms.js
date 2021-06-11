@@ -14,7 +14,7 @@ export default Terms = ({navigation}) =>{
        <View style={styles.container}>
 
        <Text/><Text>
-   Copyright [2021] [Kontopodis Emmanouil]
+   Copyright 2021 Kontopodis Emmanouil
    </Text><Text/><Text>
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.

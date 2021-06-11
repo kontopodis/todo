@@ -4,6 +4,7 @@ import Settings from './settings'
 import DoneTasks from './doneTasks'
 import OldGrocery from './oldGrocery'
 import Terms from '../licence/terms'
+import TodoCategories from './todoCategories/todoCategories'
 const Stack = createStackNavigator();
 export default function GroceryHome({navigation}){
 
@@ -25,6 +26,10 @@ export default function GroceryHome({navigation}){
         <Stack.Screen
           name="Licence"
           component={Terms}
+        />
+                <Stack.Screen
+          name="TodoCategories"
+          component={TodoCategories}
         />
       </Stack.Navigator>
 

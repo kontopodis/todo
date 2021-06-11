@@ -20,7 +20,7 @@ useEffect(()=>{
    db.transaction((tx) => {
     //statement
     console.log("creating the table")
-     tx.executeSql(  "create table if not exists tasks (id integer primary key not null, done int, value text);"   ),
+     tx.executeSql(  "create table if not exists tasks (id integer primary key not null, done int, value text,category text);"   ),
      [] },
      //db results
      (tx,err)=>{
